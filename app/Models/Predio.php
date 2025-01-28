@@ -1,205 +1,149 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * Class Predio
- *
- * @property $id
- * @property $geom
- * @property $fid_
- * @property $entity
- * @property $numero
- * @property $codigo
- * @property $propietari
- * @property $ci
- * @property $manzana_id
- * @property $numpropiedad
- * @property $suptestimo
- * @property $supemedici
- * @property $supcedida
- * @property $suputil
- * @property $tros
- * @property $tc_x
- * @property $tc_y
- * @property $radio
- * @property $via_id
- * @property $topografico_id
- * @property $forma_id
- * @property $ubicacion_id
- * @property $servicio_id
- * @property $ff_id
- * @property $vz
- * @property $paterno
- * @property $materno
- * @property $nombre1
- * @property $nombre2
- * @property $tipodocumento_id
- * @property $personalidad_id
- * @property $razonsocial_id
- * @property $titularidad_id
- * @property $docpropiedad_id
- * @property $adquisicion_id
- * @property $equipamiento_id
- * @property $frente
- * @property $fondo
- * @property $observaciones
- * @property $revestimiento_id
- * @property $tc_ancho
- * @property $tc_alto
- * @property $norte
- * @property $sur
- * @property $este
- * @property $oeste
- * @property $area
- * @property $perimetro
- * @property $energia
- * @property $created_at
- * @property $updated_at
- * @property $zh_id
- * @property $distrito_id
- * @property $urbanizacion_id
- * @property $urbanizaci
- * @property $nombrevia
- *
- * @property PredioServicio[] $predioServicios
- * @package App
- * @mixin \Illuminate\Database\Eloquent\Builder
- */
 class Predio extends Model
 {
-    
     protected $perPage = 20;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = ['propietari', 
-                 'numero',
-                 'ci',
-                 'numpropiedad',
-                 'suptestimonio',
-                 'supemedici',
-                 'supcedida',
-                 'suputil',
-                 'tros',
-                 'via_id',
-                 'topografico_id',
-                 'forma_id',
-                 'ubicacion_id',
-                 'servicio_id',
-                 'ff_id',
-                 'vz',
-                 'paterno',
-                 'materno',
-                 'nombre1',
-                 'nombre2',
-                 'tipodocumento_id',
-                 'personalidad_id',
-                 'razonsocial_id',
-                 'titularidad_id',
-                 'docpropiedad_id',
-                 'adquisicion_id',
-                 'equipamiento_id',
-                 'frente',
-                 'fondo',
-                 'observaciones',
-                 'revestimiento_id',
-                 'norte',
-                 'sur',
-                 'este',
-                 'oeste',
-                 'urbanizacione_id',
-                 'energia',
-                 'persona_id',
-                 'empresa_id'
-                ];
+    protected $fillable = [
+        'propietari',
+        'numero',
+        'ci',
+        'numpropiedad',
+        'suptestimonio',
+        'supemedici',
+        'supcedida',
+        'suputil',
+        'tros',
+        'via_id',
+        'topografico_id',
+        'forma_id',
+        'ubicacion_id',
+        'servicio_id',
+        'ff_id',
+        'vz',
+        'paterno',
+        'materno',
+        'nombre1',
+        'nombre2',
+        'tipodocumento_id',
+        'personalidad_id',
+        'razonsocial_id',
+        'titularidad_id',
+        'docpropiedad_id',
+        'adquisicion_id',
+        'equipamiento_id',
+        'frente',
+        'fondo',
+        'observaciones',
+        'revestimiento_id',
+        'norte',
+        'sur',
+        'este',
+        'oeste',
+        'urbanizacione_id',
+        'energia',
+        'persona_id',
+        'empresa_id'
+    ];
 
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function predioServicios()
+    public function predioServicios(): HasMany
     {
-        return $this->hasMany(\App\Models\PredioServicio::class, 'id', 'predio_id');
-
+        return $this->hasMany(PredioServicio::class, 'predio_id');
     }
-    public function personas()
+
+    public function personas(): BelongsToMany
     {
         return $this->belongsToMany(Persona::class);
     }
-    public function empresa()
+
+    public function empresa(): BelongsTo
     {
         return $this->belongsTo(Empresa::class);
     }
-    public function zh()
+
+    public function zh(): BelongsTo
     {
         return $this->belongsTo(Zh::class);
     }
-    public function distrito()
+
+    public function distrito(): BelongsTo
     {
         return $this->belongsTo(Distrito::class);
     }
-    public function manzana()
+
+    public function manzana(): BelongsTo
     {
         return $this->belongsTo(Manzana::class);
     }
-    public function via()
+
+    public function via(): BelongsTo
     {
         return $this->belongsTo(Via::class);
     }
-    public function urbanizacione()
+
+    public function urbanizacione(): BelongsTo
     {
         return $this->belongsTo(Urbanizacione::class);
     }
-    public function revestimiento()
+
+    public function revestimiento(): BelongsTo
     {
         return $this->belongsTo(Revestimiento::class);
     }
-    public function topografico()
+
+    public function topografico(): BelongsTo
     {
         return $this->belongsTo(Topografico::class);
     }
-    public function forma()
+
+    public function forma(): BelongsTo
     {
         return $this->belongsTo(Forma::class);
     }
-    public function ubicacion()
+
+    public function ubicacion(): BelongsTo
     {
         return $this->belongsTo(Ubicacion::class);
     }
-    public function tipodocumento()
+
+    public function tipodocumento(): BelongsTo
     {
         return $this->belongsTo(Tipodocumento::class);
     }
-    public function personalidad()
+
+    public function personalidad(): BelongsTo
     {
         return $this->belongsTo(Personalidad::class);
     }
-    public function razonsocial()
+
+    public function razonsocial(): BelongsTo
     {
         return $this->belongsTo(Razonsocial::class);
     }
-    public function titularidad()
+
+    public function titularidad(): BelongsTo
     {
         return $this->belongsTo(Titularidad::class);
     }
-    public function docpropiedad()
+
+    public function docpropiedad(): BelongsTo
     {
         return $this->belongsTo(Docpropiedad::class);
     }
-    public function adquisicion()
+
+    public function adquisicion(): BelongsTo
     {
-        return $this->belongsTo(adquisicion::class);
+        return $this->belongsTo(Adquisicion::class);
     }
-    public function servicios()
+
+    public function servicios(): BelongsToMany
     {
         return $this->belongsToMany(Servicio::class, 'predio_servicio');
     }
-
-    
 }
